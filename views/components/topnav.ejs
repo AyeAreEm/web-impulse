@@ -1,0 +1,10 @@
+<div class="topnav">
+    <p id="account"></p>
+    <p onclick="window.location = '/'" style="cursor: pointer;">Impulse</p>
+</div><br>
+
+<script>
+    let account = document.getElementById("account");
+    account.textContent = localStorage.getItem("impulse-account") || "Guest";
+    account.onclick = () => { window.location = localStorage.getItem("impulse-account") ? `/profile/${localStorage.getItem("impulse-account")}` : "/login"};
+</script>

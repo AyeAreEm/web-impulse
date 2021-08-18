@@ -74,6 +74,40 @@ app.post('/login', (req, res) => {
     }
 });
 
+app.get('/profile/:id', (req, res) => {
+    try {
+        blogData.find({author: req.params.id}, (err, docs) => {
+            res.render('profile', {
+                blogs: docs,
+                user: req.params.id
+            });
+        });
+    } catch {
+        res.sendStatus(500);
+    }
+});
+
+app.post('/profile', (req, res) => {
+    // need to make a "constant" because the username and userUrl not match even tho they are the same string.
+    let constant = req.body.username;
+
+    try {
+        if (req.body.username == constant && req.body.userUrl == constant) {
+            res.sendStatus(200);
+        } else {
+            res.sendStatus(409);
+        }
+    } catch {
+        res.sendStatus(500);
+    }
+});
+
+/* 
+DO NOT DO '/profile/:id/settings'
+INSTEAD DO '/account/settings' (or something like that) 
+AND DO MOST OF THE SETTINGS STUFF USING CLIENT SIDE THEN SEND IT TO THE SERVER SIDE
+*/
+
 // post tings
 app.get('/create-post', (req, res) => {
     res.render('posting');
@@ -88,11 +122,15 @@ app.post('/create-post', (req, res) => {
 });
 
 app.get('/post/:id', (req, res) => {
-    blogData.find({_id: req.params.id}, (err, docs) => {
-        res.render('fullPost', {
-            blog: docs
+    try {
+        blogData.find({_id: req.params.id}, (err, docs) => {
+            res.render('fullPost', {
+                blogs: docs
+            });
         });
-    });
+    } catch {
+        res.sendStatus(500);
+    }
 });
 
 // hashing function

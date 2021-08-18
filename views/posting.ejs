@@ -5,6 +5,8 @@
     <title>Impulse</title>
 </head>
 <body>
+    <%- include('./components/topnav') %>
+
     <form id="create-post" autocomplete="off">
         <h1 onclick="window.location = '/'" style="cursor: pointer;">Impulse</h1>
         <input required type="text" id="title" name="title" placeholder="title..." style="height: 25px;" /><br>
@@ -13,6 +15,10 @@
     </form>
 
     <script>
+        if (localStorage.getItem("impulse-account") === null) {
+            window.location = "/login";
+        }
+
         const form = document.getElementById('create-post');
 
         form.addEventListener('submit', (e) => {

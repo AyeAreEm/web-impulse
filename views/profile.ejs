@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./components/head') %>
+    <title>Impulse</title>
+</head>
+<body>
+    <%- include('./components/topnav')%>
+
+    <br><br><br><br>
+    <h1 style="text-align: center;"><%= user %></h1>
+    <div id="desc" class="desc">
+        <p>followers: 10</p>
+        <p>following: 10</p>
+    </div>
+
+    <%- include('./components/blogTemp')%>
+
+    <script>
+        let username = localStorage.getItem("impulse-account");
+        let url = window.location.href.split('/');
+        let userUrl = url[4]
+        let data = {username, userUrl}
+        console.log(data)
+
+        fetch('/profile', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(res => {
+            if (res.status == 200) {
+                let parent = document.getElementById("desc");
+                let link = document.createElement('a');
+                link.appendChild(document.createTextNode("settings"));
+                link.href = "#";
+                parent.appendChild(link);
+            }
+        });
+    </script>
+</body>
+</html>
