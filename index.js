@@ -1,6 +1,7 @@
 // dependencies
 const express = require('express');
 const datastore = require('nedb');
+const bcrypt = require('bcrypt');
 
 // init dependencies
 const app = express();
@@ -36,8 +37,12 @@ app.post('/sign-up', (req, res) => {
             let found = docs.find(elem => elem.username == req.body.username);
 
             if (found == undefined) {
-                accData.insert(req.body);
-                res.sendStatus(200);
+                hash(req.body.password).then(result => {
+                    let username = req.body.username;
+                    let data = { username, password: result };
+                    accData.insert(data);
+                    res.sendStatus(200);
+                });
             } else if (found) {
                 res.sendStatus(409);
             }
@@ -54,7 +59,9 @@ app.get('/login', (req, res) => {
 app.post('/login', (req, res) => {
     try {
         accData.find({}, (err, docs) => {
-            let found = docs.find(elem => elem.username == req.body.username && elem.password == req.body.password);
+            let found = docs.find(elem => {
+                return elem.username == req.body.username && bcrypt.compareSync(req.body.password, elem.password)
+            });
 
             if (found == undefined) {
                 res.sendStatus(409);
@@ -87,6 +94,11 @@ app.get('/post/:id', (req, res) => {
         });
     });
 });
+
+// hashing function
+async function hash(password) {
+    return await bcrypt.hash(password, 10);
+}
 
 const port = process.env.PORT || 5000;
 app.listen(port);

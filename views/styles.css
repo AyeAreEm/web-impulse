@@ -9,6 +9,11 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+a {
+    color: rgb(184, 184, 184);
+    font-style: italic;
+}
+
 .topnav {
     overflow: hidden;
     margin: auto;

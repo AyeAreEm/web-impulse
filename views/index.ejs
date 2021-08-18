@@ -23,6 +23,10 @@
 
     <script>
         document.getElementById("account").textContent = localStorage.getItem("impulse-account");
+
+        if (localStorage.getItem("impulse-account") === null) {
+            window.location = "/login";
+        }
     </script>
 </body>
 </html>
