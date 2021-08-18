@@ -1,0 +1,61 @@
+html, * {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: rgb(51, 55, 82);
+    color: rgb(184, 184, 184);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+    overflow: hidden;
+    margin: auto;
+    width: 40%;
+}
+
+.topnav p {
+    float: left;
+    text-align: center;
+    font-size: 20px;
+    padding: 14px 16px;
+}
+
+#container {
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
+
+.blog {
+    background-color: rgb(51, 55, 82);
+    margin: auto;
+    width: 40%;
+    text-align: center;
+    border: 1px solid #ccc;
+}
+
+#create-post {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#create-post input[type=text], #create-post textarea, #create-post input[type=password] {
+    margin: auto;
+    display: block;
+    width: 20vw;
+}
+
+#create-post input[type=submit] {
+    margin: auto;
+    display: block;
+    width: 10vh;
+    height: 3vh;
+    background-color: rgb(212, 35, 79);
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}

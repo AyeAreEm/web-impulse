@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./components/head') %>
+    <title>Impulse - Sign Up</title>
+</head>
+<body>
+    <h1 onclick="window.location = '/'" style="cursor: pointer;">Impulse</h1>
+    <form id="create-post">
+        <h1>Sign Up</h1>
+        <input required type="text" name="username" id="username" placeholder="Username" style="height: 25px;" /><br>
+        <input required type="password" id="password" placeholder="Password" style="height: 25px;"/><br>
+        <input required type="password" id="repass" placeholder="Confirm Password" style="height: 25px;"/><br>
+        <input type="submit">
+    </form>
+
+    <script>
+        let form = document.getElementById('create-post');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+
+            let username = document.getElementById('username').value;
+            let password = document.getElementById('password').value;
+            let repass = document.getElementById('repass').value;
+
+            
+            if (password == repass) {
+                let data = { username, password }
+                console.log(data)
+
+                fetch('/sign-up', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(res => {
+                    if (res.status == 409) {
+                        alert("username already exists. try another.")
+                    } else if (res.status == 200) {
+                        localStorage.setItem("impulse-account", username);
+                        window.location = '/';
+                    }
+                });
+            } else {
+                alert("password is not confirmed.");
+            }
+        });
+    </script>
+</body>
+</html>

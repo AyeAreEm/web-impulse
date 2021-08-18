@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./components/head') %>
+    <title>Impulse</title>
+</head>
+<body>
+    <div id="container">
+        <% blog.forEach(item => { %>
+            <div id="<%= item._id %>" class="blog"><br>
+                <h1><%= item.title %></h1><br>
+                <h3 style="margin-left: 20%; margin-right: 20%; text-align: left;"><%= item.content %></h3>
+                <p style="text-align: right; margin-right: 5%;">-<%= item.author %></p>
+            </div>
+        <%})%>
+    </div>
+</body>
+</html>
