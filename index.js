@@ -102,11 +102,45 @@ app.post('/profile', (req, res) => {
     }
 });
 
-/* 
-DO NOT DO '/profile/:id/settings'
-INSTEAD DO '/account/settings' (or something like that) 
-AND DO MOST OF THE SETTINGS STUFF USING CLIENT SIDE THEN SEND IT TO THE SERVER SIDE
-*/
+app.get('/account/settings', (req, res) => {
+    res.render('settings');
+});
+
+app.post('/account/settings', (req, res) => {
+    try {
+        accData.update({username : req.body.oldUsername}, {$set: {username: req.body.username, bio: req.body.bio}}, {}, () => {
+            res.sendStatus(200);
+        });
+    } catch {
+        res.sendStatus(500);
+    }
+});
+
+app.get('/account/passwords', (req, res) => {
+    res.render('editPass');
+});
+
+app.post('/account/passwords', (req, res) => {
+    try {
+        accData.find({}, (err, docs) => {
+            let found = docs.find(elem => {
+                return elem.username == req.body.username && bcrypt.compareSync(req.body.oldPass, elem.password);
+            });
+
+            if (found) {
+                hash(req.body.password).then(result => {
+                    accData.update({username: req.body.username}, {$set: {password: result}}, {}, () => {
+                        res.sendStatus(200);
+                    });
+                });
+            } else if (found == undefined) {
+                res.sendStatus(409);
+            }
+        });
+    } catch {
+        res.sendStatus(500);
+    }
+});
 
 // post tings
 app.get('/create-post', (req, res) => {

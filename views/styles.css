@@ -43,6 +43,28 @@ a {
     border: 1px solid #ccc;
 }
 
+.settings {
+    margin: auto;
+    width: 40%;
+}
+
+.settings input[type=text], .settings textarea, .settings input[type=password] {
+    margin: auto;
+    display: block;
+    width: 20vw;
+}
+
+.settings input[type=submit] {
+    margin: auto;
+    display: block;
+    width: 10vh;
+    height: 3vh;
+    background-color: rgb(212, 35, 79);
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
 #create-post {
     position: absolute;
     top: 50%;

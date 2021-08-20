@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./components/head') %>
+    <title>Impulse</title>
+</head>
+<body>
+    <%- include('./components/topnav')%>
+
+    <form id="create-post">
+        <h2>Edit Profile</h2>
+        <input type="text" id="username" placeholder="Username" style="height: 25px;" /><br>
+        <textarea name="bio" id="bio" placeholder="Bio" style="height: 100px;"></textarea><br>
+        <input type="submit" /><br>
+        <p style="text-align: center;">Wanna change your password? Right <a href="/account/passwords">here</a></p><br>
+        <p style="text-align: center;">Switch Accounts? Right <a href="/login">here</a></p><br>
+        <p style="text-align: center;">Logout? Right <a href="#" onclick="logout()">here</a></p>
+    </form>
+
+    <script>
+        if (localStorage.getItem("impulse-account") === null) {
+            window.location = "/login";
+        }
+
+        let username = document.getElementById('username');
+        let bio = document.getElementById("bio");
+
+        username.value = localStorage.getItem("impulse-account");
+        bio.value = localStorage.getItem("impulse-bio") || "";
+
+        let form = document.getElementById('create-post');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+
+            let oldUsername = localStorage.getItem("impulse-account");
+            let dataUser = username.value;
+            let dataBio = bio.value;
+
+            let data = { oldUsername, username: dataUser, bio: dataBio };
+
+            fetch('/account/settings', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(res => {
+                if (res.status == 200) {
+                    localStorage.setItem("impulse-account", dataUser);
+                    localStorage.setItem("impulse-bio", dataBio);
+                    alert("successfully edited your profile");
+                    account.textContent = localStorage.getItem("impulse-account") || "Guest";
+                } else {
+                    alert("unable to edit profile.")
+                }
+            })
+        });
+
+        function logout() {
+            localStorage.clear();
+            window.location = "/login";
+        }
+    </script>
+</body>
+</html>

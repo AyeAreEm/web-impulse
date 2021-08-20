@@ -1,2 +1,3 @@
-{"username":"hash test","password":"$2b$10$ZZIKWdINducnI2c8YRKktuKkHIEdSZQM1m/iM56/0AgEaU13Pk5A.","_id":"6UvvWwttj5ddnv98"}
-{"username":"AyeAreEm","password":"$2b$10$mC7ewQWV1xTsv.4PHpTr9ePMPDpMEcMfIY0wKVy2oWNoLrDnADA.2","_id":"wmH28IHkYl4iFjdY"}
+{"username":"finished hash test","password":"$2b$10$ZZIKWdINducnI2c8YRKktuKkHIEdSZQM1m/iM56/0AgEaU13Pk5A.","_id":"6UvvWwttj5ddnv98","bio":"the meaning of life is 42"}
+{"username":"AyeAreEm","password":"$2b$10$/K/FV6BNLuvF9/kQVLHjJOhjJie5d7/FGqKt6612X6x546k.L3yGO","_id":"wmH28IHkYl4iFjdY","bio":"ooga booga coder brain"}
+{"username":"edited test account","password":"$2b$10$3mP7MNmh6kS96rMJwg7GvefOarFpm90HLV7x1GmD7VOmI9osLhlhy","_id":"zMQSvZLZ4DLb12lJ","bio":"new bio"}

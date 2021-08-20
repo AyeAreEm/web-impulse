@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./components/head') %>
+    <title>Impulse</title>
+</head>
+<body>
+    <%- include('./components/topnav')%>
+
+    <form id="create-post">
+        <h2>Change Password</h2>
+        <input type="password" id="old-password" placeholder="Current Password" style="height: 25px;" /><br>
+        <input type="password" id="new-password" placeholder="New Password" style="height: 25px;" /><br>
+        <input type="password" id="repass" placeholder="Confirm Password" style="height: 25px;" /><br>
+        <input type="submit" /><br>
+        <p style="text-align: center;">Wanna edit your profile? Right <a href="/account/settings">here</a></p><br>
+        <p style="text-align: center;">Switch Accounts? Right <a href="/login">here</a></p>
+    </form>
+
+    <script>
+        if (localStorage.getItem("impulse-account") === null) {
+            window.location = "/login";
+        }
+
+        let form = document.getElementById('create-post');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+
+            let oldPass = document.getElementById("old-password").value;
+            let newPass = document.getElementById("new-password").value;
+            let repass = document.getElementById("repass").value;
+            let username = localStorage.getItem("impulse-account");
+
+            if (newPass == repass) {
+                let data = {username, oldPass, password: newPass};
+
+                fetch('/account/passwords', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                }).then(res => {
+                    if (res.status == 200) {
+                        alert("successfully changed password");
+                    } else if (res.status == 409) {
+                        alert("old password was incorrect")
+                    }
+                });
+            } else {
+                alert("password is not confirmed.")
+            }
+        });
+    </script>
+</body>
+</html>
