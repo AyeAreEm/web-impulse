@@ -25,7 +25,10 @@
             e.preventDefault();
 
             let title = document.getElementById('title').value;
-            let content = document.getElementById('content').value;
+            let content = document.getElementById('content').value.split("\r\n").join('<br>');
+
+            console.log(content);
+            
             let author = localStorage.getItem("impulse-account");
 
             const data = { author, title, content };

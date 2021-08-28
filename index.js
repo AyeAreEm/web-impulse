@@ -2,6 +2,7 @@
 const express = require('express');
 const datastore = require('nedb');
 const bcrypt = require('bcrypt');
+const showdown = require('showdown');
 
 // init dependencies
 const app = express();
@@ -17,11 +18,16 @@ app.set('views', './views');
 app.set('view engine', 'ejs');
 app.use(express.static('views'));;
 
+let converter = new showdown.Converter()
+converter.setFlavor('github');
+
 // routes
 app.get('/', (req, res) => {
     blogData.find({}, (err, docs) => {
+        let convertedDocs = betterDocs(docs);
+
         res.render('index', {
-            blogs: docs
+            blogs: convertedDocs,
         });
     });
 });
@@ -77,8 +83,10 @@ app.post('/login', (req, res) => {
 app.get('/profile/:id', (req, res) => {
     try {
         blogData.find({author: req.params.id}, (err, docs) => {
+            let convertedDocs = betterDocs(docs);
+
             res.render('profile', {
-                blogs: docs,
+                blogs: convertedDocs,
                 user: req.params.id
             });
         });
@@ -158,8 +166,10 @@ app.post('/create-post', (req, res) => {
 app.get('/post/:id', (req, res) => {
     try {
         blogData.find({_id: req.params.id}, (err, docs) => {
+            let convertedDocs = betterDocs(docs);
+
             res.render('fullPost', {
-                blogs: docs
+                blogs: convertedDocs
             });
         });
     } catch {
@@ -170,6 +180,19 @@ app.get('/post/:id', (req, res) => {
 // hashing function
 async function hash(password) {
     return await bcrypt.hash(password, 10);
+}
+
+function betterDocs(docs) {
+    let convertedDocs = [];
+    docs.forEach(doc => {
+        let htmlTxt = converter.makeHtml(doc.content);
+        let author = doc.author;
+        let title = doc.title;
+        let id = doc._id;
+        convertedDocs.push({author, title, content: htmlTxt, id});
+    });
+
+    return convertedDocs;
 }
 
 const port = process.env.PORT || 5000;

@@ -1,9 +1,19 @@
 <div id="container">
-    <% blogs.forEach(blog => { %>
+    <script>
+        function htmlDecode(i) {
+            let contentElem = document.createElement('div');
+            let raw = document.getElementById(i).innerHTML;
+            contentElem.innerHTML = document.getElementById(i).innerHTML;
+            document.getElementById(i).innerHTML = contentElem.childNodes[0].nodeValue;
+        }
+    </script>
+
+    <% blogs.forEach((blog, i) => { %>
         <br><br><br><br>
-        <div id="<%= blog._id %>" class="blog" onclick="window.location = '/post/<%= blog._id %>'"><br>
+        <div id="<%= blog.id %>" class="blog" onclick="window.location = '/post/<%= blog.id %>'"><br>
             <h1><%= blog.title %></h1><br>
-            <h3 style="margin-left: 20%; margin-right: 20%; text-align: left;"><%= blog.content %></h3>
+            <h3 id="blogContent<%= i%>" style="margin-left: 20%; margin-right: 20%; text-align: left;"><%= blog.content %></h3>
+            <script>htmlDecode(`blogContent<%= i %>`)</script>
             <p style="text-align: right; margin-right: 5%;">-<%= blog.author %></p>
         </div>
     <%})%>
