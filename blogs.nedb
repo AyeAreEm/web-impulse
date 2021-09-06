@@ -1,4 +1,1 @@
-{"author":"AyeAreEm","title":"showing test","content":"this is a test to check the distance between blog posts. it should be fine or nearly there by now so ya. spiderman\n","_id":"ItDnEfprv74hFdSP"}
-{"author":"AyeAreEm","title":"line test","content":"this is a line break test\nthis is a new line\nanother new line\nlast one","_id":"hcpQ3hIUJiwJf0rl"}
-{"author":"AyeAreEm","title":"test title","content":"this is a test. When this shows up on the home page, it should say that the author is AyeAreEm instead of adrian or a test account. so ya","_id":"owZAWNH5lvxhtgLA"}
-{"author":"AyeAreEm","title":"markdown test","content":"## This should be a bit bigger\n    - this should be different i hope\n[link maybe](https://www.youtube.com/)","_id":"kGiykOFGQZxGEd7U"}
+{"author":"AyeAreEm","title":"another date test","content":"## This is a date test\nit should show that it is September 6 2021. ","today":"Sep 6, 2021","_id":"RcfT3XY4SEuZ7r51"}

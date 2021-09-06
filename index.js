@@ -188,8 +188,9 @@ function betterDocs(docs) {
         let htmlTxt = converter.makeHtml(doc.content);
         let author = doc.author;
         let title = doc.title;
+        let date = doc.today;
         let id = doc._id;
-        convertedDocs.push({author, title, content: htmlTxt, id});
+        convertedDocs.push({author, title, content: htmlTxt, id, date});
     });
 
     return convertedDocs;

@@ -27,11 +27,17 @@
             let title = document.getElementById('title').value;
             let content = document.getElementById('content').value.split("\r\n").join('<br>');
 
-            console.log(content);
-            
+            const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            let today = new Date();
+            let dd = today.getDate();
+            let mm = today.getMonth();
+            let yyyy = today.getFullYear();
+
+            today = `${months[mm]} ${dd}, ${yyyy}`;
+
             let author = localStorage.getItem("impulse-account");
 
-            const data = { author, title, content };
+            const data = { author, title, content, today };
             fetch('/create-post', {
                 method: 'POST',
                 headers: {

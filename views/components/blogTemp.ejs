@@ -15,6 +15,7 @@
             <h3 id="blogContent<%= i%>" style="margin-left: 20%; margin-right: 20%; text-align: left;"><%= blog.content %></h3>
             <script>htmlDecode(`blogContent<%= i %>`)</script>
             <p style="text-align: right; margin-right: 5%;">-<%= blog.author %></p>
+            <p style="text-align: right; margin-right: 5%;">-<%= blog.date %></p>
         </div>
     <%})%>
 </div>
