@@ -30,6 +30,11 @@ a {
     cursor: pointer;
 }
 
+/* .topnav input[type=text] {
+    float: right;
+    padding: 14px 10px;
+} */
+
 #container {
     align-items: center;
     justify-content: center;
@@ -63,7 +68,7 @@ a {
     width: 20vw;
 }
 
-#create-post input[type=submit] {
+input[type=submit] {
     margin: auto;
     display: block;
     width: 10vh;

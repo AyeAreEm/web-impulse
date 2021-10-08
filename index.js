@@ -45,7 +45,7 @@ app.post('/sign-up', (req, res) => {
             if (found == undefined) {
                 hash(req.body.password).then(result => {
                     let username = req.body.username;
-                    let data = { username, password: result };
+                    let data = { username, password: result, bio: "" };
                     accData.insert(data);
                     res.sendStatus(200);
                 });
@@ -82,12 +82,24 @@ app.post('/login', (req, res) => {
 
 app.get('/profile/:id', (req, res) => {
     try {
-        blogData.find({author: req.params.id}, (err, docs) => {
-            let convertedDocs = betterDocs(docs);
+        let convertedDocs;
+        let userDetails;
 
-            res.render('profile', {
-                blogs: convertedDocs,
-                user: req.params.id
+        blogData.find({author: req.params.id}, (err, docs) => {
+            convertedDocs = betterDocs(docs);
+
+            accData.find({username: req.params.id}, (err, docs) => {
+
+                docs.forEach(doc => {
+                    let username = doc.username;
+                    let bio = doc.bio;
+                    userDetails = {username, bio};
+
+                    res.render('profile', {
+                        blogs: convertedDocs,
+                        user: userDetails
+                    });
+                });
             });
         });
     } catch {
