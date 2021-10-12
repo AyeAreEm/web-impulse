@@ -189,6 +189,29 @@ app.get('/post/:id', (req, res) => {
     }
 });
 
+app.get('/delete-post/:id', (req, res) => {
+    try {
+        let convertedDocs;
+        blogData.find({author: req.params.id}, (err, docs) => {
+            convertedDocs = betterDocs(docs);
+            res.render('deletePost', {
+                blogs: convertedDocs
+            })
+        })
+    } catch {
+        res.sendStatus(500);
+    }
+});
+
+app.post('/delete-post', (req, res) => {
+    try {
+        blogData.remove({_id: req.body.id}, {}, (err, numRemoved) => console.log(numRemoved));
+        res.sendStatus(200)
+    } catch {
+        res.sendStatus(500);
+    }
+});
+
 // hashing function
 async function hash(password) {
     return await bcrypt.hash(password, 10);

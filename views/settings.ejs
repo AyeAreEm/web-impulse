@@ -14,13 +14,17 @@
         <input type="submit" /><br>
         <p style="text-align: center;">Wanna change your password? Right <a href="/account/passwords">here</a></p><br>
         <p style="text-align: center;">Switch Accounts? Right <a href="/login">here</a></p><br>
-        <p style="text-align: center;">Logout? Right <a href="#" onclick="logout()">here</a></p>
+        <p style="text-align: center;">Logout? Right <a href="#" onclick="logout()">here</a></p><br>
+        <p style="text-align: center;">Delete a post? Right <a id="delete-post-link" href="">here</a></p>
     </form>
 
     <script>
         if (localStorage.getItem("impulse-account") === null) {
             window.location = "/login";
         }
+
+        let deleteLink = document.getElementById("delete-post-link");
+        deleteLink.href = `/delete-post/${localStorage.getItem("impulse-account")}`;
 
         let username = document.getElementById('username');
         let bio = document.getElementById("bio");

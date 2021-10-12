@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./components/head') %>
+    <title>Impulse</title>
+</head>
+<body>
+    <%- include('./components/topnav')%>
+
+    <div id="container">
+        <script>
+            function htmlDecode(i) {
+                let contentElem = document.createElement('div');
+                let raw = document.getElementById(i).innerHTML;
+                contentElem.innerHTML = document.getElementById(i).innerHTML;
+                document.getElementById(i).innerHTML = contentElem.childNodes[0].nodeValue;
+            }
+        </script>
+    
+        <% blogs.forEach((blog, i) => { %>
+            <!-- onclick="window.location = '/post/ = blog.id '": link to the full post -->
+            <br><br><br><br>
+            <div id="<%= blog.id %>" class="blog" ><br>
+                <h1><%= blog.title %></h1><br>
+                <h3 id="blogContent<%= i%>" style="margin-left: 20%; margin-right: 20%; text-align: left;"><%= blog.content %></h3>
+                <script>htmlDecode(`blogContent<%= i %>`)</script>
+                <p style="text-align: right; margin-right: 5%;">-<%= blog.date %></p>
+                <input type="submit" value="delete" onclick="deletePost(`<%= blog.id %>`)"/>
+            </div>
+        <%})%>
+    </div>
+
+    <script>
+        let username = localStorage.getItem("impulse-account");
+        let url = window.location.href.split('/');
+        let userUrl = url[4].split('%20').join(' ');
+
+        if (username != userUrl) {
+            window.location = '/';
+        }
+
+        function deletePost(id) {
+            let data = { id };
+
+            fetch('/delete-post', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(res => {
+                let deletedBlog = document.getElementById(id);
+                deletedBlog.remove();
+            });
+        }
+    </script>
+</body>
+</html>
